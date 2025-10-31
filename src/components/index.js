@@ -5,6 +5,8 @@ import Button from "./UI/Button";
 import InputField from "./UI/InputField";
 import SignupComponent from "./SignupComponent";
 import LoginComponent from "./LoginComponent";
+import LogoutBtn from "./LogoutBtn";
+import ProfileComponent from "./ProfileComponent";
 
 export const Components = {
   Logo,
@@ -14,4 +16,6 @@ export const Components = {
   InputField,
   SignupComponent,
   LoginComponent,
+  LogoutBtn,
+  ProfileComponent,
 };

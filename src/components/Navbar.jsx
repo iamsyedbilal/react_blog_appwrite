@@ -7,11 +7,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
 import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
+import { Components } from "./index";
 
 function Navbar() {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const { mode } = useSelector((store) => store.theme);
+  const authStatus = useSelector((store) => store.auth.status);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", mode === "dark");
@@ -43,16 +45,31 @@ function Navbar() {
             Create
           </Link>
         </li>
-        <li>
-          <Link to="/login" onClick={() => setIsOpen(false)}>
-            Login
-          </Link>
-        </li>
-        <li>
-          <Link to="/signup" onClick={() => setIsOpen(false)}>
-            Signup
-          </Link>
-        </li>
+        {!authStatus ? (
+          <>
+            <li>
+              <Link to="/login" onClick={() => setIsOpen(false)}>
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup" onClick={() => setIsOpen(false)}>
+                Signup
+              </Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/user-profile" onClick={() => setIsOpen(false)}>
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Components.LogoutBtn onLogout={() => setIsOpen(false)} />
+            </li>
+          </>
+        )}
       </ul>
       <div className=" z-50 flex items-center gap-2 ">
         <button

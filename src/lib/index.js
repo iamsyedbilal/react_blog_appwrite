@@ -1,3 +1,3 @@
-import { createAccount, userLogin, getCurrentUser } from "./auth";
+import { createAccount, userLogin, getCurrentUser, logoutUser } from "./auth";
 
-export { createAccount, userLogin, getCurrentUser };
+export { createAccount, userLogin, getCurrentUser, logoutUser };

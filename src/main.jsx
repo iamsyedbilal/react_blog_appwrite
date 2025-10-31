@@ -36,6 +36,10 @@ const router = createBrowserRouter([
         path: "/post-details:id",
         element: <Pages.PostDetails />,
       },
+      {
+        path: "/user-profile",
+        element: <Pages.Profile />,
+      },
     ],
   },
 ]);

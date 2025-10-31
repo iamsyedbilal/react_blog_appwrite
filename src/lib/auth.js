@@ -36,3 +36,12 @@ export async function userLogin({ email, password }) {
 export async function getCurrentUser() {
   return await appwriteAccount.get();
 }
+
+export async function logoutUser() {
+  try {
+    const currentUser = await appwriteAccount.get();
+    if (currentUser) await appwriteAccount.deleteSessions("current");
+  } catch (error) {
+    console.error("Error logging out:", error);
+  }
+}
