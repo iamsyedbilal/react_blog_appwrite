@@ -5,7 +5,7 @@ export async function createAccount({ name, email, password }) {
   try {
     try {
       const current = await appwriteAccount.get();
-      if (current) await appwriteAccount.deleteSession("current");
+      if (current) await appwriteAccount.deleteSessions("current");
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +34,8 @@ export async function userLogin({ email, password }) {
 }
 
 export async function getCurrentUser() {
-  return await appwriteAccount.get();
+  const user = await appwriteAccount.get();
+  return user;
 }
 
 export async function logoutUser() {

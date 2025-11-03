@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Pages } from "./pages";
 import { store } from "./store/store.js";
 import { Provider } from "react-redux";
+import { Components } from "./components";
 
 const router = createBrowserRouter([
   {
@@ -18,27 +19,59 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Pages.Login />,
+        element: (
+          <Components.ProtectedRoutes authentication={false}>
+            <Pages.Login />
+          </Components.ProtectedRoutes>
+        ),
       },
       {
         path: "/signup",
-        element: <Pages.Signup />,
+        element: (
+          <Components.ProtectedRoutes authentication={false}>
+            <Pages.Signup />
+          </Components.ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/all-posts",
+        element: (
+          <Components.ProtectedRoutes authentication>
+            <Pages.AllPosts />
+          </Components.ProtectedRoutes>
+        ),
       },
       {
         path: "/create-post",
-        element: <Pages.CreatePost />,
+        element: (
+          <Components.ProtectedRoutes authentication>
+            <Pages.CreatePost />
+          </Components.ProtectedRoutes>
+        ),
       },
       {
         path: "/edit-post:id",
-        element: <Pages.EditPost />,
+        element: (
+          <Components.ProtectedRoutes authentication>
+            <Pages.EditPost />
+          </Components.ProtectedRoutes>
+        ),
       },
       {
         path: "/post-details:id",
-        element: <Pages.PostDetails />,
+        element: (
+          <Components.ProtectedRoutes authentication>
+            <Pages.PostDetails />
+          </Components.ProtectedRoutes>
+        ),
       },
       {
         path: "/user-profile",
-        element: <Pages.Profile />,
+        element: (
+          <Components.ProtectedRoutes authentication>
+            <Pages.Profile />
+          </Components.ProtectedRoutes>
+        ),
       },
     ],
   },

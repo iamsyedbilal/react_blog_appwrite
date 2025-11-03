@@ -7,6 +7,10 @@ import SignupComponent from "./SignupComponent";
 import LoginComponent from "./LoginComponent";
 import LogoutBtn from "./LogoutBtn";
 import ProfileComponent from "./ProfileComponent";
+import Selector from "./UI/Selector";
+import CreatePostComponent from "./posts/CreatePostComponent";
+import RTE from "./RTE";
+import ProtectedRoutes from "./AuthLayout";
 
 export const Components = {
   Logo,
@@ -18,4 +22,8 @@ export const Components = {
   LoginComponent,
   LogoutBtn,
   ProfileComponent,
+  Selector,
+  CreatePostComponent,
+  RTE,
+  ProtectedRoutes,
 };

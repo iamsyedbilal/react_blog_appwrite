@@ -5,6 +5,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import PostDetails from "./PostDetails";
 import Profile from "./Profile";
+import AllPosts from "./AllPosts";
 
 export const Pages = {
   Home,
@@ -14,4 +15,5 @@ export const Pages = {
   Signup,
   PostDetails,
   Profile,
+  AllPosts,
 };

@@ -41,6 +41,11 @@ function Navbar() {
           </Link>
         </li>
         <li>
+          <Link to="/all-posts" onClick={() => setIsOpen(false)}>
+            All Posts
+          </Link>
+        </li>
+        <li>
           <Link to="/create-post" onClick={() => setIsOpen(false)}>
             Create
           </Link>

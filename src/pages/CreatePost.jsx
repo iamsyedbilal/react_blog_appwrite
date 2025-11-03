@@ -1,5 +1,11 @@
+import { Components } from "../components";
+
 function CreatePost() {
-  return <h1>CreatePost</h1>;
+  return (
+    <div>
+      <Components.CreatePostComponent />
+    </div>
+  );
 }
 
 export default CreatePost;
