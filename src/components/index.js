@@ -11,6 +11,7 @@ import Selector from "./UI/Selector";
 import CreatePostComponent from "./posts/CreatePostComponent";
 import RTE from "./RTE";
 import ProtectedRoutes from "./AuthLayout";
+import PostCard from "./PostCard";
 
 export const Components = {
   Logo,
@@ -25,5 +26,6 @@ export const Components = {
   Selector,
   CreatePostComponent,
   RTE,
+  PostCard,
   ProtectedRoutes,
 };

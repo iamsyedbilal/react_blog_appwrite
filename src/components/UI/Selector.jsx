@@ -1,21 +1,31 @@
-import { useId } from "react";
+import { forwardRef, useId } from "react";
 
-function Selector({ options, label, className, props }, ref) {
+const Selector = forwardRef(function Selector(
+  { options = [], label, className = "", ...props },
+  ref
+) {
   const id = useId();
+
   return (
-    <div>
+    <div className="space-y-1">
       {label && (
-        <label htmlFor={id} className="">
+        <label
+          htmlFor={id}
+          className="block font-medium text-gray-700 dark:text-white"
+        >
           {label}
         </label>
       )}
+
       <select
         id={id}
         ref={ref}
         {...props}
-        className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full ${className}`}
+        className={`px-3 py-2 rounded-lg bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 
+                 text-gray-900 border dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 
+                 placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all duration-300 w-full ${className}`}
       >
-        {options?.map((option) => (
+        {options.map((option) => (
           <option key={option} value={option}>
             {option}
           </option>
@@ -23,6 +33,6 @@ function Selector({ options, label, className, props }, ref) {
       </select>
     </div>
   );
-}
+});
 
 export default Selector;

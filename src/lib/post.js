@@ -1,5 +1,5 @@
 import { databases, storage } from "./appwrite";
-import { ID, Query } from "appwrite";
+import { ID, Query, Permission, Role } from "appwrite";
 
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const COLLECTION_ID = "post";
@@ -54,7 +54,10 @@ export async function deletePost(postId) {
 
 export async function uploadFile(file) {
   try {
-    return await storage.createFile(BUCKET_ID, ID.unique(), file);
+    const response = await storage.createFile(BUCKET_ID, ID.unique(), file, [
+      Permission.read(Role.any()),
+    ]);
+    return response.$id;
   } catch (error) {
     console.log("Appwrite serive :: uploadFile :: error", error);
     return false;
@@ -72,5 +75,5 @@ export async function deleteFile(fileId) {
 }
 
 export function getFilePreview(fileId) {
-  return storage.getFilePreview(BUCKET_ID, fileId);
+  return storage.getFileView(BUCKET_ID, fileId);
 }

@@ -1,18 +1,12 @@
 import { appwriteAccount } from "./appwrite";
 import { ID } from "appwrite";
 
+// Create Account
 export async function createAccount({ name, email, password }) {
   try {
-    try {
-      const current = await appwriteAccount.get();
-      if (current) await appwriteAccount.deleteSessions("current");
-    } catch (error) {
-      console.log(error);
-    }
     await appwriteAccount.create(ID.unique(), email, password, name);
     await appwriteAccount.createEmailPasswordSession(email, password);
-    const currentUser = await appwriteAccount.get();
-    return currentUser;
+    return await appwriteAccount.get();
   } catch (error) {
     if (error?.message?.includes("exists")) {
       throw new Error("An account with this email already exists.");
@@ -21,28 +15,41 @@ export async function createAccount({ name, email, password }) {
   }
 }
 
+// Login User
 export async function userLogin({ email, password }) {
   try {
-    const current = await getCurrentUser();
-    if (current) return current;
+    const session = await appwriteAccount.createEmailPasswordSession(
+      email,
+      password
+    );
+    return session;
   } catch (error) {
-    if (error?.code !== 401) console.error("Session check failed:", error);
+    if (error?.message?.toLowerCase().includes("invalid credentials")) {
+      throw new Error("Invalid email or password.");
+    }
+    throw new Error("Login failed. Please try again.");
   }
-  // create new session & return user
-  await appwriteAccount.createEmailPasswordSession(email, password);
-  return await getCurrentUser();
 }
 
+// Get Current User
 export async function getCurrentUser() {
-  const user = await appwriteAccount.get();
-  return user;
+  try {
+    return await appwriteAccount.get();
+  } catch (error) {
+    if (error?.message?.includes("Missing scope")) return null;
+    throw error;
+  }
 }
 
+// Logout User
 export async function logoutUser() {
   try {
-    const currentUser = await appwriteAccount.get();
-    if (currentUser) await appwriteAccount.deleteSessions("current");
+    await appwriteAccount.deleteSession("current");
   } catch (error) {
+    if (error?.message?.includes("Missing scope")) {
+      console.log("No active session, skipping logout.");
+      return;
+    }
     console.error("Error logging out:", error);
   }
 }

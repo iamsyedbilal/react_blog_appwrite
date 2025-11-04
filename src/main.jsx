@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/edit-post:id",
+        path: "/edit-post/:id",
         element: (
           <Components.ProtectedRoutes authentication>
             <Pages.EditPost />
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/post-details:id",
+        path: "/post-details/:id",
         element: (
           <Components.ProtectedRoutes authentication>
             <Pages.PostDetails />

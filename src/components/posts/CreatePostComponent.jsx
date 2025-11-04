@@ -1,26 +1,27 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { createPost, uploadFile } from "../../lib/post";
+import { createPost, uploadFile } from "../../lib";
 import { Components } from "../";
+import { useNavigate } from "react-router-dom";
 
 function CreatePostComponent() {
   const { register, handleSubmit, control, reset } = useForm();
   const userData = useSelector((state) => state.auth.userData);
+  const naviagte = useNavigate();
 
   async function postSubmit(data) {
-    console.log(data);
     try {
-      const file = await uploadFile(data.image[0]);
-      const featuredImage = file?.$id || null;
-      const createdPost = await createPost({
+      const fileId = await uploadFile(data.image[0]);
+      if (!fileId) throw new Error("Image upload failed");
+      await createPost({
         title: data.title,
         content: data.content,
-        featuredImage,
+        featuredImage: fileId,
         status: data.status,
         userId: userData.$id,
       });
-
-      console.log(createdPost);
+      reset();
+      naviagte("/all-posts");
     } catch (error) {
       console.error(error);
     }
