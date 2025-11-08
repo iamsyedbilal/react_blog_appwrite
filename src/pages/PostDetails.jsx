@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { getPost, deletePost, getFilePreview } from "../lib";
 import { useSelector } from "react-redux";
 import { Components } from "../components";
-import ReactHtmlParser from "html-react-parser";
+import parse from "html-react-parser";
 
 function PostDetails() {
   const { id } = useParams();
@@ -17,6 +17,7 @@ function PostDetails() {
     async function fetchPost() {
       try {
         const post = await getPost(id);
+
         setPostDetails(post);
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -81,20 +82,23 @@ function PostDetails() {
 
       {/* Post Content (Parsed HTML) */}
       <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
-        {ReactHtmlParser(postDetails.content || "")}
+        {parse(postDetails.content || "")}
       </div>
+
+      {/* <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        By <span className="font-semibold">{postDetails.authorName}</span> •{" "}
+        {new Date(postDetails.$createdAt).toLocaleDateString()}
+      </p> */}
 
       {/* Buttons only for post owner */}
       {isOwner && (
-        <div className="flex gap-4 mt-8">
+        <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Link to={`/edit-post/${id}`}>
-            <Components.Button variant="primary">Edit</Components.Button>
+            <Components.Button variant="primary" size="md">
+              Edit
+            </Components.Button>
           </Link>
-          <Components.Button
-            onClick={handleDelete}
-            variant="danger"
-            className="bg-red-600 hover:bg-red-700 text-white"
-          >
+          <Components.Button onClick={handleDelete} variant="danger" size="md">
             Delete
           </Components.Button>
         </div>

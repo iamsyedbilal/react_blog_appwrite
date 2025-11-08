@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { Components } from "./index";
 
 function ProfileComponent() {
   const userProfile = useSelector((store) => store.auth.userData);
@@ -59,6 +61,14 @@ function ProfileComponent() {
             <span className="text-gray-600 dark:text-gray-400">
               {new Date(userProfile.$createdAt).toLocaleDateString()}
             </span>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link to="/draft-blogs">
+              <Components.Button variant="primary" size="md">
+                View Draft Blogs
+              </Components.Button>
+            </Link>
           </div>
         </div>
       </div>

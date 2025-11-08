@@ -12,11 +12,17 @@ import CreatePostComponent from "./posts/CreatePostComponent";
 import RTE from "./RTE";
 import ProtectedRoutes from "./AuthLayout";
 import PostCard from "./PostCard";
+import DraftBlogs from "./DraftBlogs";
+import EditComponent from "./posts/EditPostComponent";
+import CTA from "./CTA";
+import FeaturedPosts from "./FeaturedPosts";
 
 export const Components = {
   Logo,
   Navbar,
+  FeaturedPosts,
   Footer,
+  CTA,
   Button,
   InputField,
   SignupComponent,
@@ -28,4 +34,6 @@ export const Components = {
   RTE,
   PostCard,
   ProtectedRoutes,
+  DraftBlogs,
+  EditComponent,
 };

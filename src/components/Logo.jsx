@@ -35,7 +35,10 @@ function Logo() {
           className="dark:stroke-gray-900 transition-colors duration-300"
         />
       </svg>
-      <span className="font-black">InkFlow</span>
+      <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 ">
+        Blog
+        <span className="text-indigo-600 dark:text-indigo-400">Sphere</span>
+      </h2>
     </div>
   );
 }

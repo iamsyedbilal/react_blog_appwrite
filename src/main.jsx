@@ -73,6 +73,14 @@ const router = createBrowserRouter([
           </Components.ProtectedRoutes>
         ),
       },
+      {
+        path: "/draft-blogs",
+        element: (
+          <Components.ProtectedRoutes authentication>
+            <Components.DraftBlogs />
+          </Components.ProtectedRoutes>
+        ),
+      },
     ],
   },
 ]);

@@ -41,6 +41,17 @@ export async function getCurrentUser() {
   }
 }
 
+//Get user
+export async function getUser(userId) {
+  try {
+    const user = await appwriteAccount.get(userId);
+    console.log(user);
+  } catch (error) {
+    if (error?.message?.includes("Missing scope")) return null;
+    throw error;
+  }
+}
+
 // Logout User
 export async function logoutUser() {
   try {

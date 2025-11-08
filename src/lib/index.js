@@ -1,4 +1,10 @@
-import { createAccount, userLogin, getCurrentUser, logoutUser } from "./auth";
+import {
+  createAccount,
+  userLogin,
+  getCurrentUser,
+  logoutUser,
+  getUser,
+} from "./auth";
 import {
   createPost,
   deleteFile,
@@ -10,7 +16,7 @@ import {
   uploadFile,
 } from "./post";
 
-export { createAccount, userLogin, getCurrentUser, logoutUser };
+export { createAccount, userLogin, getCurrentUser, logoutUser, getUser };
 
 export {
   createPost,

@@ -1,5 +1,11 @@
+import { Components } from "../components";
+
 function EditPost() {
-  return <h1>EditPost</h1>;
+  return (
+    <div>
+      <Components.EditComponent />
+    </div>
+  );
 }
 
 export default EditPost;

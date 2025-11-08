@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function CreatePostComponent() {
   const { register, handleSubmit, control, reset } = useForm();
   const userData = useSelector((state) => state.auth.userData);
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   async function postSubmit(data) {
     try {
@@ -17,11 +17,11 @@ function CreatePostComponent() {
         title: data.title,
         content: data.content,
         featuredImage: fileId,
-        status: data.status,
+        status: data.status || "draft",
         userId: userData.$id,
       });
       reset();
-      naviagte("/all-posts");
+      navigate("/all-posts");
     } catch (error) {
       console.error(error);
     }
@@ -49,7 +49,13 @@ function CreatePostComponent() {
         options={["active", "draft"]}
         {...register("status")}
       />
-      <Components.Button type="submit" variant="primary" className="w-full">
+      {/* Modern responsive button */}
+      <Components.Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        className="w-full sm:w-auto"
+      >
         Create Post
       </Components.Button>
     </form>
