@@ -9,18 +9,25 @@ import {
   getFilePreview,
 } from "../../lib";
 import { Components } from "../";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  hideLoading,
+  showLoading,
+} from "../../features/loadingSlice/loadingSlice";
 
 function EditPost() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { register, handleSubmit, control, reset } = useForm();
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((store) => store.loading);
 
   // Fetch post details
   useEffect(() => {
     async function fetchPost() {
       try {
+        dispatch(showLoading("Updating Post..."));
         const data = await getPost(id);
         setPost(data);
         reset({
@@ -31,11 +38,11 @@ function EditPost() {
       } catch (error) {
         console.error("Error fetching post:", error);
       } finally {
-        setLoading(false);
+        dispatch(hideLoading());
       }
     }
     fetchPost();
-  }, [id, reset]);
+  }, [id, reset, dispatch]);
 
   // Update handler
   async function onSubmit(data) {
@@ -64,12 +71,8 @@ function EditPost() {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[70vh] text-gray-600 dark:text-gray-300">
-        Loading post...
-      </div>
-    );
+  if (isLoading) {
+    return <Components.LoadingSpinner message="Updating your post..." />;
   }
 
   if (!post) {

@@ -3,30 +3,38 @@ import { Link, useNavigate } from "react-router-dom";
 import { createAccount } from "../lib";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/authSlice/authSlice";
+import {
+  showLoading,
+  hideLoading,
+} from "../features/loadingSlice/loadingSlice";
 
 function SignupComponent() {
   const [error, setError] = useState("");
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isLoading } = useSelector((store) => store.loading);
 
   async function registerUser(data) {
-    setError("");
     try {
+      setError("");
+      dispatch(showLoading("Signing up..."));
       const userData = await createAccount(data);
       dispatch(login(userData));
       navigate("/");
     } catch (error) {
       setError(error.message);
     } finally {
+      dispatch(hideLoading());
       reset();
     }
   }
 
   return (
     <div className="flex items-center justify-center bg-white dark:bg-gray-950 transition-colors duration-300 px-4">
+      {isLoading && <Components.LoadingSpinner fullScreen />}
       <div
         className="mx-auto w-full max-w-md rounded-2xl p-8 border border-gray-200 dark:border-gray-800 
                    bg-white dark:bg-gray-900 shadow-lg dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] 

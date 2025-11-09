@@ -2,6 +2,10 @@ import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice/authSlice";
 import { logoutUser } from "../lib";
 import { useNavigate } from "react-router-dom";
+import {
+  showLoading,
+  hideLoading,
+} from "../features/loadingSlice/loadingSlice";
 
 function LogoutBtn() {
   const dispatch = useDispatch();
@@ -9,12 +13,15 @@ function LogoutBtn() {
 
   async function handleLogout({ onLogout }) {
     try {
+      dispatch(showLoading("Logging out..."));
       await logoutUser();
       dispatch(logout());
       if (onLogout) onLogout();
       navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
+    } finally {
+      dispatch(hideLoading());
     }
   }
 

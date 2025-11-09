@@ -16,6 +16,7 @@ import DraftBlogs from "./DraftBlogs";
 import EditComponent from "./posts/EditPostComponent";
 import CTA from "./CTA";
 import FeaturedPosts from "./FeaturedPosts";
+import LoadingSpinner from "./UI/LoadingSpinner";
 
 export const Components = {
   Logo,
@@ -26,6 +27,7 @@ export const Components = {
   Button,
   InputField,
   SignupComponent,
+  LoadingSpinner,
   LoginComponent,
   LogoutBtn,
   ProfileComponent,

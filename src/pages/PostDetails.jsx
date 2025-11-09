@@ -43,15 +43,13 @@ function PostDetails() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[70vh] text-gray-600 dark:text-gray-300">
-        Loading post...
-      </div>
+      <Components.LoadingSpinner message="Loading post details..." fullScreen />
     );
   }
 
   if (!postDetails) {
     return (
-      <div className="text-center text-gray-600 dark:text-gray-300 mt-10">
+      <div className="text-center text-gray-600 dark:text-gray-300 mt-10 ">
         Post not found.
       </div>
     );

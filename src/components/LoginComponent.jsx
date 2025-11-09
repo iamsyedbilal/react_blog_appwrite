@@ -1,32 +1,42 @@
 import { Components } from "./index";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { userLogin } from "../lib";
 import { login } from "../features/authSlice/authSlice";
+import {
+  showLoading,
+  hideLoading,
+} from "../features/loadingSlice/loadingSlice";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 function LoginComponent() {
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const { handleSubmit, register, reset } = useForm();
   const navigate = useNavigate();
+  const { isLoading } = useSelector((store) => store.loading);
 
   async function loginUser(data) {
     try {
       setError("");
+      dispatch(showLoading("Signing in..."));
       const userData = await userLogin(data);
       dispatch(login(userData));
       navigate("/");
     } catch (error) {
       setError(error.message);
     } finally {
+      dispatch(hideLoading());
       reset();
     }
   }
 
   return (
     <div className="flex items-center justify-center bg-white  dark:bg-gray-950 transition-colors duration-300 px-4">
+      {isLoading && <Components.LoadingSpinner fullScreen />}
       <div
         className="mx-auto w-full max-w-md rounded-2xl p-8 border border-gray-200 dark:border-gray-800 
                    bg-white dark:bg-gray-900 shadow-lg dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] 
@@ -73,14 +83,26 @@ function LoginComponent() {
               },
             })}
           />
-          <Components.InputField
-            label="Password"
-            placeholder="**********"
-            type="password"
-            {...register("password", {
-              required: true,
-            })}
-          />
+          <div className="relative w-full">
+            <Components.InputField
+              label="Password"
+              placeholder="**********"
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: true,
+              })}
+            />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-[38px] cursor-pointer text-sm text-blue-600 dark:text-purple-400 select-none"
+            >
+              {showPassword ? (
+                <AiFillEye size={20} />
+              ) : (
+                <AiFillEyeInvisible size={20} />
+              )}
+            </span>
+          </div>
 
           {error && <p className="text-red-600 text-center text-sm">{error}</p>}
 

@@ -2,7 +2,7 @@ import { Components } from "../components";
 
 function CreatePost() {
   return (
-    <div>
+    <div className="py-2">
       <Components.CreatePostComponent />
     </div>
   );

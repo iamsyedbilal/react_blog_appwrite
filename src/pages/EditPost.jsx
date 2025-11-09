@@ -2,7 +2,7 @@ import { Components } from "../components";
 
 function EditPost() {
   return (
-    <div>
+    <div className="py-2">
       <Components.EditComponent />
     </div>
   );

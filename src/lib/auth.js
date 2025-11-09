@@ -34,10 +34,14 @@ export async function userLogin({ email, password }) {
 // Get Current User
 export async function getCurrentUser() {
   try {
-    return await appwriteAccount.get();
-  } catch (error) {
-    if (error?.message?.includes("Missing scope")) return null;
-    throw error;
+    const user = await appwriteAccount.get();
+    return user;
+  } catch (err) {
+    if (err.code === 401) {
+      console.log("Guest user — not logged in");
+      return null;
+    }
+    throw err;
   }
 }
 
