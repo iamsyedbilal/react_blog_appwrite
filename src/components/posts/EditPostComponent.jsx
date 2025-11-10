@@ -29,6 +29,7 @@ function EditPost() {
       try {
         dispatch(showLoading("Updating Post..."));
         const data = await getPost(id);
+
         setPost(data);
         reset({
           title: data.title,
@@ -47,9 +48,9 @@ function EditPost() {
   // Update handler
   async function onSubmit(data) {
     try {
+      dispatch(showLoading("Updating Image..."));
       let featuredImage = post.featuredImage;
 
-      // If a new image is uploaded, replace the old one
       if (data.image?.[0]) {
         const newFileId = await uploadFile(data.image[0]);
         if (newFileId) {
@@ -68,6 +69,8 @@ function EditPost() {
       navigate(`/post-details/${id}`);
     } catch (error) {
       console.error("Error updating post:", error);
+    } finally {
+      dispatch(hideLoading());
     }
   }
 
@@ -98,7 +101,13 @@ function EditPost() {
         {...register("title", { required: true })}
       />
 
-      <Components.RTE name="content" label="Content" control={control} />
+      <Components.RTE
+        key={post?.content}
+        name="content"
+        label="Content"
+        control={control}
+        defaultValue={post?.content || ""}
+      />
 
       {/* Current image preview */}
       {post.featuredImage && (

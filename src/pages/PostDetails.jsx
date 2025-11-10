@@ -1,33 +1,38 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getPost, deletePost, getFilePreview } from "../lib";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Components } from "../components";
 import parse from "html-react-parser";
+import {
+  hideLoading,
+  showLoading,
+} from "../features/loadingSlice/loadingSlice";
 
 function PostDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.userData);
+  const { isLoading } = useSelector((store) => store.loading);
 
   const [postDetails, setPostDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchPost() {
       try {
+        dispatch(showLoading("Post Details"));
         const post = await getPost(id);
-
         setPostDetails(post);
       } catch (error) {
         console.error("Error fetching post:", error);
       } finally {
-        setLoading(false);
+        dispatch(hideLoading());
       }
     }
 
     fetchPost();
-  }, [id]);
+  }, [id, dispatch]);
 
   async function handleDelete() {
     const confirmDelete = confirm("Are you sure you want to delete this post?");
@@ -39,12 +44,6 @@ function PostDetails() {
     } catch (error) {
       console.error("Error deleting post:", error);
     }
-  }
-
-  if (loading) {
-    return (
-      <Components.LoadingSpinner message="Loading post details..." fullScreen />
-    );
   }
 
   if (!postDetails) {
@@ -62,6 +61,7 @@ function PostDetails() {
       className="max-w-4xl mx-auto my-10 p-6 rounded-2xl 
                  bg-white dark:bg-gray-900 shadow-lg border border-gray-200 dark:border-gray-800"
     >
+      {isLoading && <Components.LoadingSpinner fullScreen />}
       {/* Post Image */}
       {postDetails.featuredImage && (
         <div className="overflow-hidden rounded-xl mb-6">
@@ -80,13 +80,12 @@ function PostDetails() {
 
       {/* Post Content (Parsed HTML) */}
       <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
-        {parse(postDetails.content || "")}
+        {parse(postDetails.content || "<p>No content</p>")}
       </div>
 
-      {/* <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-        By <span className="font-semibold">{postDetails.authorName}</span> •{" "}
-        {new Date(postDetails.$createdAt).toLocaleDateString()}
-      </p> */}
+      <p className="text-sm font-bold pt-2 text-gray-500 dark:text-gray-400 mb-4">
+        Created At • {new Date(postDetails.$createdAt).toLocaleDateString()}
+      </p>
 
       {/* Buttons only for post owner */}
       {isOwner && (

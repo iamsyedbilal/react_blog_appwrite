@@ -21,7 +21,7 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
       {/* ===== HERO SECTION ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-600 to-purple-600 dark:from-indigo-800 dark:to-purple-800 text-white py-24 px-6">
+      <section className="relative overflow-hidden bg-linear-to-br from-indigo-600 to-purple-600 dark:from-indigo-800 dark:to-purple-800 text-white py-24 px-6">
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight drop-shadow-lg">
             Share Your Voice with the World
